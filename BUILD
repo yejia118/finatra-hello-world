@@ -7,7 +7,7 @@ target(name='tic-tac-toe-heroku',
 jvm_binary(
   name='bin',
   basename='finatra-tic-tac-toe-heroku',
-  main='com.twitter.hello.heroku.TicTacToeServerMain',
+  main='com.twitter.tictactoe.heroku.TicTacToeServerMain',
   dependencies=[
     ':tic-tac-toe-heroku'
   ],

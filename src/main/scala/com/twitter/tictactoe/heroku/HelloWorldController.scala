@@ -1,4 +1,4 @@
-package com.twitter.hello.heroku
+package com.twitter.tictactoe.heroku
 
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller

@@ -1,4 +1,4 @@
-package com.twitter.hello.heroku
+package com.twitter.tictactoe.heroku
 
 import com.codahale.metrics.MetricFilter
 import com.twitter.finagle.http.Status._
@@ -17,7 +17,7 @@ class HelloWorldFeatureTest extends FeatureTest {
   "Server" should {
     "Say hi" in {
       server.httpGet(
-        path = "/hi?name=Bob",
+        path = "/hi?text=Bob",
         andExpect = Ok,
         withBody = "Hello Bob")
     }

@@ -1,4 +1,4 @@
-package com.twitter.hello.heroku
+package com.twitter.tictactoe.heroku
 
 import com.codahale.metrics.MetricFilter
 import com.google.inject.Stage
