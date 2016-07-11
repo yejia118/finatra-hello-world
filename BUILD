@@ -1,4 +1,4 @@
-target(name='hello-world-heroku',
+target(name='tic-tac-toe-heroku',
   dependencies=[
     'finatra/examples/hello-world-heroku/src/main/scala'
   ]
@@ -6,10 +6,10 @@ target(name='hello-world-heroku',
 
 jvm_binary(
   name='bin',
-  basename='finatra-hello-world-heroku',
-  main='com.twitter.hello.heroku.HelloWorldServerMain',
+  basename='finatra-tic-tac-toe-heroku',
+  main='com.twitter.hello.heroku.TicTacToeServerMain',
   dependencies=[
-    ':hello-world-heroku'
+    ':tic-tac-toe-heroku'
   ],
   excludes=[
     exclude('org.slf4j', 'slf4j-jdk14'),

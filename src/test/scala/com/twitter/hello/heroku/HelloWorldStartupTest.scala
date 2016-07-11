@@ -9,7 +9,7 @@ import com.twitter.inject.server.FeatureTest
 class HelloWorldStartupTest extends FeatureTest {
 
   override val server = new EmbeddedHttpServer(
-    twitterServer = new HelloWorldServer,
+    twitterServer = new TicTacToeServer,
     stage = Stage.PRODUCTION,
     verbose = false)
 

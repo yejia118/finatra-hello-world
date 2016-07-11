@@ -5,9 +5,9 @@ import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
 
-object HelloWorldServerMain extends HelloWorldServer
+object TicTacToeServerMain extends TicTacToeServer
 
-class HelloWorldServer extends HttpServer {
+class TicTacToeServer extends HttpServer {
 
   /*
    * Since Heroku only supports a single port per service,

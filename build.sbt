@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtNativePackager._
 
 packageArchetype.java_application
-name := "hello-world-heroku"
+name := "tic-tac-toe-heroku"
 organization := "com.twitter"
 version := "2.2.0"
 scalaVersion := "2.11.8"

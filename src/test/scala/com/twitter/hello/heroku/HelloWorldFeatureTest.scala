@@ -8,7 +8,7 @@ import com.twitter.inject.server.FeatureTest
 
 class HelloWorldFeatureTest extends FeatureTest {
 
-  override val server = new EmbeddedHttpServer(new HelloWorldServer)
+  override val server = new EmbeddedHttpServer(new TicTacToeServer)
 
   override def afterEach() {
     MetricsStatsReceiver.metrics.removeMatching(MetricFilter.ALL)
