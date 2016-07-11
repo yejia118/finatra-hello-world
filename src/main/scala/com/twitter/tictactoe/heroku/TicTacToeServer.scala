@@ -21,5 +21,6 @@ class TicTacToeServer extends HttpServer {
       .filter[TraceIdMDCFilter[Request, Response]]
       .filter[CommonFilters]
       .add[HelloWorldController]
+      .add[TicTacToeRootController]
   }
 }
