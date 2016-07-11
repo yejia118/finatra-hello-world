@@ -7,6 +7,6 @@ class HelloWorldController extends Controller {
 
   get("/hi") { request: Request =>
     info("hi")
-    "Hello " + request.params.getOrElse("name", "unnamed")
+    "Hello " + request.params.getOrElse("text", "unnamed")
   }
 }
