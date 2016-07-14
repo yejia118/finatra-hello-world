@@ -11,7 +11,7 @@ class Board {
 
   def isFull(): Boolean = !positions.exists(_ == null)
 
-  def isValidMove(position: Int): Boolean = position > 0 && position < 8 && positions(position) == null
+  def isValidMove(position: Int): Boolean = position >= 0 && position <= 8 && positions(position) == null
 
   def isWonBy(mark: String): Boolean = Board.winSets.exists(_.forall(positions(_) == mark))
 

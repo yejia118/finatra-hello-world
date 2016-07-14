@@ -1,5 +1,6 @@
 package com.twitter.tictactoe.heroku.parsers
 
+import com.twitter.tictactoe.heroku.constants.TicTacToeTokens
 import com.twitter.tictactoe.heroku.controllers.RequestParams
 import com.twitter.tictactoe.heroku.game.Game
 import com.twitter.tictactoe.heroku.parser.{MoveParamParser, StatusType, Status}
@@ -11,6 +12,8 @@ class MoveParamParserTest extends BaseTest {
     val params = RequestParams(
       params = Array[String]("move", "1"),
       userName = "Bob",
+      token=TicTacToeTokens.authorizedTokens.head,
+      channelId = "1",
       game = None
     )
     val expectedResponse = Status(
@@ -24,6 +27,8 @@ class MoveParamParserTest extends BaseTest {
     val params = RequestParams(
       params = Array[String]("move", "1"),
       userName = "John",
+      token=TicTacToeTokens.authorizedTokens.head,
+      channelId = "1",
       game = Some(new Game("Bob", "Amy"))
     )
     val expectedResponse = Status(
@@ -37,6 +42,8 @@ class MoveParamParserTest extends BaseTest {
     val params = RequestParams(
       params = Array[String]("move"),
       userName = "Bob",
+      token=TicTacToeTokens.authorizedTokens.head,
+      channelId = "1",
       game = Some(new Game("Bob", "Amy"))
     )
     val expectedResponse = Status(
@@ -50,6 +57,8 @@ class MoveParamParserTest extends BaseTest {
     val params = RequestParams(
       params = Array[String]("move", "10"),
       userName = "Bob",
+      token=TicTacToeTokens.authorizedTokens.head,
+      channelId = "1",
       game = Some(new Game("Bob", "Amy"))
     )
     val expectedResponse = Status(
@@ -63,6 +72,8 @@ class MoveParamParserTest extends BaseTest {
     val params = RequestParams(
       params = Array[String]("move", "1"),
       userName = "Bob",
+      token=TicTacToeTokens.authorizedTokens.head,
+      channelId = "1",
       game = Some(new Game("Bob", "Amy"))
     )
     val expectedResponse = Status(

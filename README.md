@@ -4,8 +4,8 @@ Overview
 ----------------------------------------------------------
 This application is a Finatra server which powers a tic tac toe game. Users can connect their Slack channel with this server to play the game.
 
-Check out
-* [product requirements and technical design doc](https://docs.google.com/document/d/1TIIIYDpS9E6-qepE-9gvryTrnsBqMLJYZbk4SFPZhVk/edit#heading=h.u01k6bsi6hbv)
+Check out the documents here:
+* [Product requirements and technical design doc](https://docs.google.com/document/d/1TIIIYDpS9E6-qepE-9gvryTrnsBqMLJYZbk4SFPZhVk/edit#heading=h.u01k6bsi6hbv)
 * [A video demo of how to play the game](https://www.youtube.com/)
 
 Setup the Application
@@ -20,6 +20,14 @@ $ sbt compile stage
 ```
 
 Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com/) [installed](https://devcenter.heroku.com/articles/getting-started-with-scala#set-up).
+
+Create a new app in Heroku:
+```
+$ heroku create
+Creating nameless-lake-8055 in organization heroku... done, stack is cedar-14
+http://nameless-lake-8055.herokuapp.com/ | https://git.heroku.com/nameless-lake-8055.git
+Git remote heroku added
+```
 
 Then deploy the example application to Heroku:
 
@@ -82,8 +90,8 @@ Follow the steps below to config your slack channel so that you can play tic tac
 * Start a [custom command](https://my.slack.com/services/new/slash-commands) on your own team.
 * Click button "Add configuration"
 * Choose a command you prefer for tic tac toe game, such as /ttt
-* Put the server URL as the URL: https://shrouded-inlet-34013.herokuapp.com/
-* Choose GET as Method
+* URL: [Your_Heroku_Server_URL]
+* Method: GET
 * Add your token to the authorized token list in the server
 * Save configuration
 * Go back to your channel, start to challenge your peer and enjoy the game !

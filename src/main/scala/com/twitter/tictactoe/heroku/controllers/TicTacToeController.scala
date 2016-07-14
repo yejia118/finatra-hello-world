@@ -12,10 +12,13 @@ case class SlackResponse(
 case class RequestParams(
   params: Array[String],
   userName: String,
+  token: String,
+  channelId: String,
   game: Option[Game] = None)
 
 class TicTacToeRootController extends Controller {
-  var game: Option[Game] = None
+  // A map from channel_id to game
+  val games = scala.collection.mutable.Map[String, Game]()
 
   def ticTacToeRootController = { request: Request =>
 
@@ -23,13 +26,29 @@ class TicTacToeRootController extends Controller {
 
     val params = request.params.getOrElse("text", "").split(" ")
     val userName = request.params.getOrElse("user_name", "unnamed")
-    params(0) match {
-      case "challenge" => challengePeer(RequestParams(params, userName))
-      case "move" => move(RequestParams(params, userName, game))
-      case "cancel" => cancelGame(RequestParams(params, userName, game))
-      case "status" => status(RequestParams(params, userName, game))
-      case "help" => help()
-      case _ => errorResponse()
+    val token = request.params.getOrElse("token", "")
+    val channelId = request.params.getOrElse("channel_id", "")
+    val game = games.get(channelId)
+
+    val parsedReq = RequestParams(
+      params,
+      userName,
+      token,
+      channelId,
+      game
+    )
+
+    val tokenStatus = TokenParamParser.validate(parsedReq)
+    tokenStatus.status match {
+      case StatusType.OK => params(0) match {
+        case "challenge" => challengePeer(parsedReq)
+        case "move" => move(parsedReq)
+        case "cancel" => cancelGame(parsedReq)
+        case "status" => status(parsedReq)
+        case "help" => help()
+        case _ => errorResponse()
+      }
+      case StatusType.ERROR => errorResponse(tokenStatus.errorMessage)
     }
   }
 
@@ -63,7 +82,7 @@ class TicTacToeRootController extends Controller {
   def status(request: RequestParams) = {
     val validatedStatus = StatusParamParser.validate(request)
     validatedStatus.status match {
-      case StatusType.OK => statusValid()
+      case StatusType.OK => statusValid(request)
       case StatusType.ERROR => errorResponse(validatedStatus.errorMessage)
       case _ => errorResponse()
     }
@@ -91,13 +110,14 @@ class TicTacToeRootController extends Controller {
 
   private def challengePeerValid(request: RequestParams) = {
     val peerName = request.params(1)
-    game = Some(new Game(playerNameOne = request.userName, playerNameTwo = peerName))
+    val game = new Game(playerNameOne = request.userName, playerNameTwo = peerName)
+    games.put(request.channelId, game)
 
     val text =
       s"""
          |${request.userName} is challenging ${peerName}!
          |starting a new game:
-         |${game.get.toString}
+         |${game.toString}
        """.stripMargin
 
     SlackResponse(response_type = "in_channel", text=text)
@@ -105,7 +125,7 @@ class TicTacToeRootController extends Controller {
 
   private def moveValid(request: RequestParams) = {
     val position = request.params(1)
-    val currGame = game.get
+    val currGame = request.game.get
     currGame.move(request.userName, position.toInt - 1)
 
     val text =
@@ -114,12 +134,12 @@ class TicTacToeRootController extends Controller {
          |${currGame.toString}
        """.stripMargin
 
-    if (currGame.isDone()) game = None
+    if (currGame.isDone()) games.remove(request.channelId)
     SlackResponse(response_type = "in_channel", text=text)
   }
 
   private def cancelGameValid(request: RequestParams) = {
-    game = None
+    games.remove(request.channelId)
     val text =
       s"""
          |${request.userName} successfully cancelled the current game
@@ -129,10 +149,10 @@ class TicTacToeRootController extends Controller {
     SlackResponse(response_type = "in_channel", text=text)
   }
 
-  private def statusValid() = {
+  private def statusValid(request: RequestParams) = {
     val text =
       s"""
-         |${game.get.toString}
+         |${request.game.get.toString}
       """.stripMargin
 
     SlackResponse(response_type = "in_channel", text=text)

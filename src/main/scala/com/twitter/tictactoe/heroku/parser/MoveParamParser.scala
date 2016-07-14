@@ -21,7 +21,7 @@ object MoveParamParser extends ParamParser {
       Status(StatusType.ERROR, Some(s"It is ${validPlayer}'s turn. Only ${validPlayer} can make a move"))
     else if (request.params.length < 2)
       Status(StatusType.ERROR, Some("Please specify the position you intend to move to"))
-    else if (!isInt(request.params(1)) || !game.isValidMove(request.params(1).toInt))
+    else if (!isInt(request.params(1)) || !game.isValidMove(request.params(1).toInt - 1))
       Status(
         StatusType.ERROR,
         Some(s"Position ${request.params(1)} is invalid, please view board status, and move to an open position"))
