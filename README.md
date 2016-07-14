@@ -8,7 +8,7 @@ Check out
 * [product requirements and technical design doc](https://docs.google.com/document/d/1TIIIYDpS9E6-qepE-9gvryTrnsBqMLJYZbk4SFPZhVk/edit#heading=h.u01k6bsi6hbv)
 * [A video demo of how to play the game](https://www.youtube.com/)
 
-Setup the application
+Setup the Application
 ----------------------------------------------------------
 
 ### Run the server on Heroku ###
@@ -73,3 +73,18 @@ sbt test
 [info] - validate returns ok if status is valid
     ...
 ```
+
+Config You Slack Channel with This Application
+----------------------------------------------------------
+
+Follow the steps below to config your slack channel so that you can play tic tac toe game with peers:
+
+* Start a [custom command](https://my.slack.com/services/new/slash-commands) on your own team.
+* Click button "Add configuration"
+* Choose a command you prefer for tic tac toe game, such as /ttt
+* Put the server URL as the URL: https://shrouded-inlet-34013.herokuapp.com/
+* Choose GET as Method
+* Add your token to the authorized token list in the server
+* Save configuration
+* Go back to your channel, start to challenge your peer and enjoy the game !
+
