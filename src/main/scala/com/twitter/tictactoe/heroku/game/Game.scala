@@ -1,4 +1,4 @@
-package com.twitter.tictactoe.heroku
+package com.twitter.tictactoe.heroku.game
 
 case class Player(name: String, mark: String)
 
@@ -11,6 +11,14 @@ class Game(playerNameOne: String, playerNameTwo: String) {
   def move(playerName: String, position: Int) = {
     val mark = if (playerOne.name == playerName)  playerOne.mark else playerTwo.mark
     board.move(mark, position)
+  }
+
+  def isValidMove(position: Int) = {
+    val validPositions = board.positions.zipWithIndex
+      .filter { case (p, i) => p != "x" && p != "o" }
+      .map(_._2 + 1)
+
+    validPositions.contains(position)
   }
 
   def whosTurn(): String = {
@@ -34,8 +42,7 @@ class Game(playerNameOne: String, playerNameTwo: String) {
   override def toString = {
     val boardInfo =
       s"""
-         |${playerOne.name} is ${playerOne.mark}
-         |${playerTwo.name} is ${playerTwo.mark}
+         |${playerOne.name} is ${playerOne.mark}, ${playerTwo.name} is ${playerTwo.mark}
          |current board status:
          |${board.toString}
          |

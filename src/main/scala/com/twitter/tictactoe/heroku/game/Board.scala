@@ -1,4 +1,4 @@
-package com.twitter.tictactoe.heroku
+package com.twitter.tictactoe.heroku.game
 
 class Board {
 

@@ -5,6 +5,7 @@ import com.google.inject.Stage
 import com.twitter.finagle.metrics.MetricsStatsReceiver
 import com.twitter.finatra.http.EmbeddedHttpServer
 import com.twitter.inject.server.FeatureTest
+import com.twitter.tictactoe.heroku.server.TicTacToeServer
 
 class HelloWorldStartupTest extends FeatureTest {
 
