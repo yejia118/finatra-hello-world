@@ -15,7 +15,7 @@ object MoveParamParser extends ParamParser {
   }
 
   private def validateWithGame(request: RequestParams, game: Game): Status = {
-    val validPlayer = game.whosTurn()
+    val validPlayer = game.whoesTurn()
 
     if (request.userName != validPlayer)
       Status(StatusType.ERROR, Some(s"It is ${validPlayer}'s turn. Only ${validPlayer} can make a move"))

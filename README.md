@@ -1,45 +1,17 @@
-# Finatra Hello World Heroku Example Application
+# Finatra Tic Tac Toe Application
 
-* A simple example finatra application that is deployable to [Heroku](https://heroku.com) and [integrates](https://github.com/rlazoti/finagle-metrics) with [Dropwizard/Codahale metrics](https://github.com/dropwizard/metrics).
-* Finatra examples are built in different ways depending on the branch you are in:
-
-If you're in master or a feature branch
+Overview
 ----------------------------------------------------------
-* Development from master or feature branches is not currently supported for this example. Please switch to a release branch and see the instructions below.
+This application is a Finatra server which powers a tic tac toe game. Users can connect their Slack channel with this server to play the game.
 
-If you're in a tagged release branch (e.g. [finatra-2.2.0](https://github.com/twitter/finatra/tree/finatra-2.2.0))
+Check out
+* [product requirements and technical design doc](https://docs.google.com/document/d/1TIIIYDpS9E6-qepE-9gvryTrnsBqMLJYZbk4SFPZhVk/edit#heading=h.u01k6bsi6hbv)
+* [A video demo of how to play the game](https://www.youtube.com/)
+
+Setup the application
 ----------------------------------------------------------
 
 ### Run the server on Heroku ###
-Copy the hello-world-heroku directory contents (minus the .git directory) to another location locally.
-
-```
-$ cp -R hello-world-heroku ~/finatra-hello-world
-```
-
-Initialize a git repository in the new directory location:
-
-```
-$ cd ~/finatra-hello-world
-$ git init
-Initialized empty Git repository in ~/finatra-hello-world/.git/
-```
-
-Create a `.gitignore` file (notice the newlines):
-
-```
-$ echo ".DS_Store
-classes/
-target/
-sbt-launch.jar" > .gitignore
-```
-
-Commit all the files to master:
-
-```
-$ git add .
-$ git commit -m "Initial commit."
-```
 
 Compile and stage the application:
 
@@ -48,15 +20,6 @@ $ sbt compile stage
 ```
 
 Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com/) [installed](https://devcenter.heroku.com/articles/getting-started-with-scala#set-up).
-
-Create a new app in Heroku:
-
-```
-$ heroku create
-Creating nameless-lake-8055 in organization heroku... done, stack is cedar-14
-http://nameless-lake-8055.herokuapp.com/ | https://git.heroku.com/nameless-lake-8055.git
-Git remote heroku added
-```
 
 Then deploy the example application to Heroku:
 
@@ -75,11 +38,11 @@ remote: Building source:
 You can then open the application in a browser with `heroku open`, e.g.:
 
 ```
-$ heroku open hi?name=foo
+$ heroku open
 ```
 
 
-### Run the example locally with the Heroku Toolbelt  ###
+### Run the application locally with the Heroku Toolbelt  ###
 
 See the [Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-scala#run-the-app-locally) on running an app locally with Foreman.
 
@@ -95,4 +58,18 @@ $ heroku local web
 19:48:00 web.1  | GET     /hi
 ```
 
-The app will now be running at [http://localhost:5000/hi?name=foo](http://localhost:5000/hi?name=foo). `Ctrl-C` to exit.
+The app will now be running at [http://localhost:5000](http://localhost:5000). `Ctrl-C` to exit.
+
+
+### Run all the tests locally  ###
+
+```
+sbt test
+[info] Loading project definition from /Users/jiay/workspace/finatra-tic-tac-toe/project
+[info] Set current project to tic-tac-toe-heroku (in build file:/Users/jiay/workspace/finatra-tic-tac-toe/)
+[info] Compiling 1 Scala source to /Users/jiay/workspace/finatra-tic-tac-toe/target/scala-2.11/test-classes...
+[info] StatusParamParserTest:
+[info] - validate returns error if no game is in current channel
+[info] - validate returns ok if status is valid
+    ...
+```

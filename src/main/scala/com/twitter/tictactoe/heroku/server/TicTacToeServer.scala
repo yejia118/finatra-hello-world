@@ -4,7 +4,7 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
-import com.twitter.tictactoe.heroku.controllers.{HelloWorldController, TicTacToeRootController}
+import com.twitter.tictactoe.heroku.controllers.TicTacToeRootController
 
 object TicTacToeServerMain extends TicTacToeServer
 
@@ -21,7 +21,6 @@ class TicTacToeServer extends HttpServer {
       .filter[LoggingMDCFilter[Request, Response]]
       .filter[TraceIdMDCFilter[Request, Response]]
       .filter[CommonFilters]
-      .add[HelloWorldController]
       .add[TicTacToeRootController]
   }
 }

@@ -2,7 +2,7 @@ package com.twitter.tictactoe.heroku.game
 
 class Board {
 
-  val positions = Array[String](
+  var positions = Array[String](
       null, null, null,
       null, null, null,
       null, null, null);
@@ -11,21 +11,20 @@ class Board {
 
   def isFull(): Boolean = !positions.exists(_ == null)
 
-  def isValidMove(position: Int): Boolean = position < 0 || position > 8 || positions(position) != null
+  def isValidMove(position: Int): Boolean = position > 0 && position < 8 && positions(position) == null
 
-  def isWonBy(mark: String): Boolean = Board.winSets.exists(winSet => winSet.forall(positions(_) == mark))
+  def isWonBy(mark: String): Boolean = Board.winSets.exists(_.forall(positions(_) == mark))
 
   override def toString() = {
     val positionsStr: Array[String] = positions.zipWithIndex.map{ case (p, i) =>
       if (p != null) p else (i+1).toString
     }
     s"""
-       ||${positionsStr(0)}|${positionsStr(1)}|${positionsStr(2)}|
-       ||${positionsStr(3)}|${positionsStr(4)}|${positionsStr(5)}|
-       ||${positionsStr(6)}|${positionsStr(7)}|${positionsStr(8)}|
+       | |${positionsStr(0)}|${positionsStr(1)}|${positionsStr(2)}|
+       | |${positionsStr(3)}|${positionsStr(4)}|${positionsStr(5)}|
+       | |${positionsStr(6)}|${positionsStr(7)}|${positionsStr(8)}|
     """.stripMargin
   }
-
 }
 
 object Board
@@ -40,5 +39,4 @@ object Board
       Array(2, 5, 8),
       Array(0, 4, 8),
       Array(2, 4, 6))
-
 }

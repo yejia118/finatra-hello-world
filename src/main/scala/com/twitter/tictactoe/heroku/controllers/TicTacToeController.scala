@@ -10,9 +10,9 @@ case class SlackResponse(
   text: String)
 
 case class RequestParams(
- params: Array[String],
- userName: String,
- game: Option[Game] = None)
+  params: Array[String],
+  userName: String,
+  game: Option[Game] = None)
 
 class TicTacToeRootController extends Controller {
   var game: Option[Game] = None
@@ -20,6 +20,7 @@ class TicTacToeRootController extends Controller {
   def ticTacToeRootController = { request: Request =>
 
     info("Accessing tic tac toe controller")
+
     val params = request.params.getOrElse("text", "").split(" ")
     val userName = request.params.getOrElse("user_name", "unnamed")
     params(0) match {
@@ -71,8 +72,9 @@ class TicTacToeRootController extends Controller {
   def help() = {
     val text =
       s"""
+         |usage:
          |/ttt challenge <userName> to start a new game
-         |/ttt play <board_position> to make a move
+         |/ttt move <board_position> to make a move
          |/ttt cancel to cancel the current game. Only the the current players have permission to do so
          |/ttt status to view current board status, and whose turn it is
          |/ttt help to get all available commands
@@ -89,17 +91,13 @@ class TicTacToeRootController extends Controller {
 
   private def challengePeerValid(request: RequestParams) = {
     val peerName = request.params(1)
-
-    game = Some(new Game(
-      playerNameOne = request.userName,
-      playerNameTwo = peerName
-    ))
+    game = Some(new Game(playerNameOne = request.userName, playerNameTwo = peerName))
 
     val text =
       s"""
          |${request.userName} is challenging ${peerName}!
          |starting a new game:
-         |${game.toString}
+         |${game.get.toString}
        """.stripMargin
 
     SlackResponse(response_type = "in_channel", text=text)
@@ -113,7 +111,7 @@ class TicTacToeRootController extends Controller {
     val text =
       s"""
          |${request.userName} played at position ${position}
-         |${game.toString}
+         |${currGame.toString}
        """.stripMargin
 
     if (currGame.isDone()) game = None
@@ -134,7 +132,7 @@ class TicTacToeRootController extends Controller {
   private def statusValid() = {
     val text =
       s"""
-         |${game.toString}
+         |${game.get.toString}
       """.stripMargin
 
     SlackResponse(response_type = "in_channel", text=text)

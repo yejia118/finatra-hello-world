@@ -2,40 +2,43 @@ package com.twitter.tictactoe.heroku.game
 
 case class Player(name: String, mark: String)
 
+object Game {
+  val playerOneMark = "x"
+  val playerTwoMark = "o"
+}
+
 class Game(playerNameOne: String, playerNameTwo: String) {
 
   val board = new Board();
-  val playerOne = new Player(playerNameOne, "x")
-  val playerTwo = new Player(playerNameTwo, "o")
+  val playerOne = new Player(playerNameOne, Game.playerOneMark)
+  val playerTwo = new Player(playerNameTwo, Game.playerTwoMark)
+  var lastPlayedBy = playerTwo.name
 
   def move(playerName: String, position: Int) = {
     val mark = if (playerOne.name == playerName)  playerOne.mark else playerTwo.mark
     board.move(mark, position)
+    lastPlayedBy = playerName
   }
 
-  def isValidMove(position: Int) = {
-    val validPositions = board.positions.zipWithIndex
-      .filter { case (p, i) => p != "x" && p != "o" }
-      .map(_._2 + 1)
-
-    validPositions.contains(position)
+  def isValidMove(position: Int): Boolean = {
+    board.isValidMove(position)
   }
 
-  def whosTurn(): String = {
-    val playerOneCount = board.positions.filter(_ == "x").length
-    val playerTwoCount = board.positions.filter(_ == "o").length
-
-    if (playerTwoCount >= playerOneCount)
-      playerOne.name
+  def whoesTurn(): String = {
+    if (lastPlayedBy == playerNameOne)
+      playerNameTwo
     else
-      playerTwo.name
+      playerNameOne
   }
 
-  def isDone(): Boolean = board.isFull() || board.isWonBy("x") || board.isWonBy("o")
+  def isDone(): Boolean =
+      board.isFull() ||
+      board.isWonBy(Game.playerOneMark) ||
+      board.isWonBy(Game.playerTwoMark)
 
   def wonBy(): String = {
-    if (board.isWonBy("x")) playerOne.name
-    else if (board.isWonBy("o")) playerTwo.name
+    if (board.isWonBy(Game.playerOneMark)) playerOne.name
+    else if (board.isWonBy(Game.playerTwoMark)) playerTwo.name
     else "no one"
   }
 
@@ -50,7 +53,7 @@ class Game(playerNameOne: String, playerNameTwo: String) {
 
     val turnsInfo =
       s"""
-         |It is ${whosTurn()}'s turn
+         |It is ${whoesTurn()}'s turn
          |Please enter the number of the position and make a move
        """.stripMargin
 
