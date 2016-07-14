@@ -6,7 +6,7 @@ This application is a Finatra server which powers a tic tac toe game. Users can 
 
 Check out the documents here:
 * [Product requirements and technical design doc](https://docs.google.com/document/d/1TIIIYDpS9E6-qepE-9gvryTrnsBqMLJYZbk4SFPZhVk/edit#heading=h.u01k6bsi6hbv)
-* [A video demo of how to play the game](https://www.youtube.com/)
+* [A video demo of how to play the game](https://youtu.be/1yEDnEDQWos)
 
 Setup the Application
 ----------------------------------------------------------
